@@ -106,12 +106,11 @@ class Node(object):
         target = self
 
         # if self has no parent it has no cousins
-        if self.parent == None;
+        if self.parent == None:
             return set()
         
         #if self has a parent continue finding cousins
-        if self.parent != None:
-
+        else:
             target_gen = 0 # target generation level of self
             cousins = []  # list of cousins in target gen level
             visited = [] # track visited children
@@ -121,26 +120,32 @@ class Node(object):
             # set root to gen level 0
             while self.parent:
                 self = self.parent
-                gen[self]=0
                 target_gen+=1
 
+            gen[self] = 0
+
             # append children of root parent
-            visited.append(self.children)
+            visited=[ child for child in self.children]
+
+            # print('visited====>',visited)
 
             # while visited list not empty traversee through tree Depth First
             while visited:
+                child = visited.pop()
+                # add gen leve for child in dictionary based on parent
+                gen[child]= gen[child.parent] +1
 
-                child = visited.pop
-
-                gen [child]= gen[self.parent] +1
-
+                # child generation same as target add children to cousins
                 if gen[child] == target_gen:
-                    cousins.append(child.data)
+                    if child != target:
+                        cousins.append(child)
+
+                # if child not in target add its children 
                 else:
+                    if child.children:
+                        visited.extend(child.children)
 
-
-
-
+        return set(cousins)
 
 
 if __name__ == '__main__':
