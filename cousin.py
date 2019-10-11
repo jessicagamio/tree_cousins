@@ -103,6 +103,45 @@ class Node(object):
     def cousins(self):
         """Find nodes on the same level as this node."""
 
+        target = self
+
+        # if self has no parent it has no cousins
+        if self.parent == None;
+            return set()
+        
+        #if self has a parent continue finding cousins
+        if self.parent != None:
+
+            target_gen = 0 # target generation level of self
+            cousins = []  # list of cousins in target gen level
+            visited = [] # track visited children
+            gen = {} # generation dict to traack gen of every node visited
+
+            # backtrack from self to root to aquire target gen level
+            # set root to gen level 0
+            while self.parent:
+                self = self.parent
+                gen[self]=0
+                target_gen+=1
+
+            # append children of root parent
+            visited.append(self.children)
+
+            # while visited list not empty traversee through tree Depth First
+            while visited:
+
+                child = visited.pop
+
+                gen [child]= gen[self.parent] +1
+
+                if gen[child] == target_gen:
+                    cousins.append(child.data)
+                else:
+
+
+
+
+
 
 if __name__ == '__main__':
     import doctest
